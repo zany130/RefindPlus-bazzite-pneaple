@@ -86,8 +86,20 @@ Replace the new `include` with your previous theme include, or restore your save
 
 Run `python scripts/build_assets.py` after editing source assets; requires Pillow. The source ZIP includes these high-resolution sources and a `PUBLISHING.md` with steps to create a GitHub repository and push it. The compact installation ZIP omits `source/` to save space.
 
+## Source wallpaper: Bazzite Convergence
+
+The neon gaming-room background was adapted and recomposed from **Convergence**, an **official Bazzite desktop wallpaper**. The installed `background.png` is a user-approved *edited, resampled theme composition* with custom translucent menu bands, not an unmodified copy of the official wallpaper.
+
+- Official source: [Bazzite Convergence wallpaper (press kit)](https://github.com/ublue-os/bazzite/blob/main/press_kit/art/Convergence_Wallpaper.png).
+- Also distributed through [Universal Blue artwork / Bazzite wallpapers](https://github.com/ublue-os/artwork/tree/main/wallpapers/bazzite/images).
+- Branding guidance: [Bazzite press-kit README](https://github.com/ublue-os/bazzite/blob/main/press_kit/README.md), which asks that official logos not be distorted or modified.
+
+**Licensing note:** The Universal Blue artwork repository declares Apache-2.0 for the repository while cautioning that individual wallpapers can have different licensing. We have not independently verified a file-specific license grant for **Convergence** or whether all incorporated source models permit redistribution of this derivative wallpaper. Being bundled with Bazzite does not, by itself, resolve that question. Confirm redistribution and derivative permissions with the rights holder before treating this artwork as unconditionally reusable. The project's own MIT license covers its original code and documentation, **not automatically the source wallpaper or official trademarks**.
+
+This is an **unofficial community rEFInd theme**, not affiliated with, sponsored by, or endorsed by Bazzite or Universal Blue. Project and platform names, logos, and other trademarks remain with their respective owners.
+
 ## Credits and licensing
 
-Design inspired by [Pneaple Boot Theme by pineapplelite](https://github.com/pineapplelite/Pneaple-Boot-Theme) (MIT-licensed) and icon-shadow treatment inspired by [BsxM1 by AlexFullmoon](https://github.com/AlexFullmoon/refind-bsxm1-theme). No upstream theme PNGs or configuration files were copied. Artwork in this package was independently generated and adapted for this project from the user's approved concepts. Bazzite, Windows and other names/logos remain the property of their respective holders; not an official Bazzite/Universal Blue release. See `LICENSE` and `ATTRIBUTION.md`.
+Design inspired by [Pneaple Boot Theme by pineapplelite](https://github.com/pineapplelite/Pneaple-Boot-Theme) (MIT-licensed) and icon-shadow treatment inspired by [BsxM1 by AlexFullmoon](https://github.com/AlexFullmoon/refind-bsxm1-theme). No upstream theme PNGs or configuration files were copied. The theme composition was generated from the user's approved concept, **which incorporates and adapts Bazzite's official Convergence desktop wallpaper**; see the source-wallpaper section above. Bazzite, Windows and other names/logos remain the property of their respective holders; not an official Bazzite/Universal Blue release. See `LICENSE` and `ATTRIBUTION.md`.
 
 Official documentation: [rEFInd Theming](https://www.rodsbooks.com/refind/themes.html) and [rEFInd Configuration](https://www.rodsbooks.com/refind/configfile.html).
