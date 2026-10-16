@@ -10,7 +10,7 @@ Binary SHA-256: `c973b6a92ee93871be3818cfecd04b16801bf0e27f0f55959c81b9ddd683f06
 - Real Firmware, Reboot and Shutdown entries rendered at the bottom with `tool_row_tune -10000`.
 - Keyboard Down changes selection from an OS placeholder to Firmware. The glowing-dot indicator and shared label render at the moved tools row.
 - A second VM run with `tool_row_tune 0` restores the normal tools position below the OS icons. Pixel comparison of the entire area above the original tools row (y < 628 at 1080p) is identical between the baseline and moved layout. Wallpaper and OS-row placement are unchanged.
-- All existing wallpaper, icon and selection PNGs match the source theme byte-for-byte. PNG decoding and configured asset paths were checked; `git diff --check` passed.
+- The wallpaper matches source-theme commit `13644ec` byte-for-byte; icons and selection PNGs retain their current versions. PNG decoding and configured asset paths were checked; `git diff --check` passed.
 - Preview script syntax and command-line interface checked. Captures validate the framebuffer dimensions.
 
 The test OS entries are clearly labeled placeholders using copies of the boot manager for layout only. They were not launched. No real host disks were attached; tools were selected but firmware/reboot/shutdown actions were not executed.

@@ -14,7 +14,7 @@ The rEFInd icon collection is sourced from [chris1111/Shadow-rEFInd](https://git
 ## Bazzite Convergence wallpaper and derived design
 
 - **Official source:** [Convergence_Wallpaper.png in Bazzite's press kit](https://github.com/ublue-os/bazzite/blob/main/press_kit/art/Convergence_Wallpaper.png); related Bazzite wallpapers are also collected in the [Universal Blue artwork repository](https://github.com/ublue-os/artwork/tree/main/wallpapers/bazzite/images).
-- **Adaptation:** `background.png` incorporates and recomposes the Convergence gaming-room illustration as a 4K boot-menu wallpaper, with translucent header/menu/footer bands and the final “PNEAPLE GAMING THEME” heading. The central menu band has been extended downward to sit behind rEFInd's utility row; the footer band remains unchanged. This is **not** the original unmodified official wallpaper.
+- **Adaptation:** `background.png` incorporates and recomposes the Convergence gaming-room illustration as a 4K boot-menu wallpaper, with translucent header/menu/footer bands and the final “PNEAPLE GAMING THEME” heading. This adaptation restores the narrower central menu band and dark footer band from source-theme commit `13644ec`. This is **not** the original unmodified official wallpaper.
 - **Supporting source files:** PNGs under `source/` are historic/generated assets and prior visual composition inputs; none are necessary on the EFI System Partition.
 - **Screenshots:** `screenshots/concept-preview.png` is a design mockup; `screenshots/preview.png` is a real rEFInd screenshot from **QEMU/OVMF**, not actual physical UEFI.
 - **Licensing:** the [Universal Blue artwork repository](https://github.com/ublue-os/artwork) declares Apache-2.0 at the repository level but expressly warns that **individual wallpapers may have different licenses**. The file-specific Convergence license and permission to publish this particular derivative are **not independently verified**. The theme's MIT license and attribution do not grant such permissions; seek a decision from the rights holder before a release that assumes they do.
@@ -35,7 +35,7 @@ See the project [README](README.md) for safe installation and QEMU-versus-hardwa
 ## RefindPlus adaptation
 
 Based on zany130/rEFInd-bazzite-pneaple at `a973082` (history retained).
-The wallpaper, icons and selection graphics are unchanged by this adaptation.
+The wallpaper is restored byte-for-byte from source-theme commit `13644ecef6224422c733ef7d8456c68995ae6d86`. The middle band was extended in `da5f844` and the footer removed in `3b8531d`; this restoration only replaces the wallpaper. Icons and selection graphics retain their current versions.
 The new configuration places the real tools row near the bottom using the
 experimental `tool_row_tune` feature in zany130/RefindPlus, commit
 `31cee4c00c2b98ce731e79bb635934884fe20ec9`. New screenshots named

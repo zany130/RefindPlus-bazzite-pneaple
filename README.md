@@ -1,6 +1,6 @@
 # RefindPlus Bazzite Pneaple
 
-A separate RefindPlus adaptation of [rEFInd Bazzite Pneaple](https://github.com/zany130/rEFInd-bazzite-pneaple), with the real EFI tools row positioned near the bottom, inspired by the original concept. The existing 4K wallpaper, Shadow icons and glowing-dot selection graphics are unchanged.
+A separate RefindPlus adaptation of [rEFInd Bazzite Pneaple](https://github.com/zany130/rEFInd-bazzite-pneaple), with the real EFI tools row positioned near the bottom, inspired by the original concept. The 4K wallpaper is restored from source-theme commit `13644ec`, bringing back the narrower middle band and dark bottom band. The current Shadow icons and glowing-dot selection graphics are retained.
 
 **Requires the experimental `tool_row_tune` build:** [zany130/RefindPlus, feature/tool-row-tune](https://github.com/zany130/RefindPlus/tree/feature/tool-row-tune), tested commit `31cee4c00c2b98ce731e79bb635934884fe20ec9`. [Release/debug build artifacts](https://github.com/zany130/RefindPlus/actions/runs/38934290203). Stock rEFInd and RefindPlus builds without that feature cannot move the tools this way. This theme does not include an EFI binary.
 
@@ -16,7 +16,7 @@ The screenshot uses labeled Bazzite/Windows **VM layout placeholders**, not inst
 - Explicit 1080p sizes with `scale_ui 99` avoid RefindPlus's automatic HiDPI enlargement. The optional 4K profile doubles the icon sizes.
 - A separate example enables the three real tools. The theme itself does not change boot entries, scanning, tools, loaders, timeout, Secure Boot or firmware settings.
 
-RefindPlus displays **one selected-item label**, including when an OS entry is selected. That shared label follows the tools to the bottom. Independent captions below every icon, as drawn in the concept, are not supported by this feature. The source wallpaper's extended middle band is retained; this adaptation changes menu positioning rather than repainting the artwork.
+RefindPlus displays **one selected-item label**, including when an OS entry is selected. That shared label follows the tools to the bottom. Independent captions below every icon, as drawn in the concept, are not supported by this feature. The narrower middle band and bottom band are restored byte-for-byte from the earlier artwork; the tools now sit over the restored bottom band.
 
 ## Try it on Bazzite without changing your boot installation
 
