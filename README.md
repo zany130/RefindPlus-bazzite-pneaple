@@ -4,7 +4,7 @@ A 4K neon-gaming-room rEFInd theme, combining **Pneaple-inspired translucent bla
 
 > **Status:** First installation candidate. Image dimensions and transparency are verified, but its on-screen position and behavior have **not yet been tested on physical UEFI firmware**. The example preview is a **concept illustration**, not an actual rEFInd capture.
 
-![Illustrative theme concept (not a firmware screenshot)](screenshots/concept-preview.png)
+![QEMU screenshot (not a firmware screenshot and may have QEMU artifacts that won't be present on a live system)](screenshots/preview.png)
 
 ## Included assets
 
