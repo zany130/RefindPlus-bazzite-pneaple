@@ -1,6 +1,6 @@
 # rEFInd Bazzite Pneaple
 
-A 4K neon-gaming-room rEFInd theme, combining **Pneaple-inspired translucent black header/menu/footer bands** with soft blue–violet highlights and custom OS/tool icons. Built around the Bazzite gaming experience and rEFInd 0.14.x.
+A 4K neon-gaming-room rEFInd theme, combining **Pneaple-inspired translucent black header/menu/footer bands** with soft blue–violet highlights and the Shadow-rEFInd icon family (with custom Bazzite, Shell, and Rescue exceptions). Built around the Bazzite gaming experience and rEFInd 0.14.x.
 
 > **Status:** First installation candidate. Image dimensions and transparency are verified, but its on-screen position and behavior have **not yet been tested on physical UEFI firmware**. The example preview is a **concept illustration**, not an actual rEFInd capture.
 
@@ -9,11 +9,17 @@ A 4K neon-gaming-room rEFInd theme, combining **Pneaple-inspired translucent bla
 ## Included assets
 
 - `background.png`: **3840×2160 RGB PNG**, resampled from the approved 1672×941 illustration, including the header and *empty* translucent menu/tool bands.
-- `selection_big.png` / `selection_small.png`: **288×288 / 128×128 RGBA PNG** for 256px OS and 96px utility icons.
-- `icons/os_bazzite.png`: Bazzite logo for a manual boot entry. Other OS icons: `os_win.png`, `os_windows.png`, `os_win11.png`.
-- `icons/func_firmware.png`, `icons/func_reset.png`, `icons/func_shutdown.png`: automatically named rEFInd utility icon replacements.
-- `icons/os_shell.png`, `icons/os_rescue.png`: optional/manual-entry icons only. A Shell or Rescue entry **requires a real executable**; adding an icon alone does not create a menu entry.
+- `selection_big.png` / `selection_small.png`: **144×144 / 64×64 PNG** from Shadow-rEFInd, for 128px OS and 48px utility icons.
+- `icons/os_bazzite.png`: shared custom Bazzite icon from the Penguin Swarm theme (Shadow-rEFInd has no Bazzite-specific icon). Windows icons (`os_win.png`, `os_windows.png`, `os_win11.png`) are Shadow-rEFInd assets.
+- `icons/func_firmware.png`, `func_reset.png`, `func_shutdown.png`, `func_about.png`, `func_exit.png` and `tool_*.png`: original Shadow-rEFInd utility icons, at native small-icon size.
+- `icons/os_shell.png`, `icons/os_rescue.png`: shared custom main-row icons from Penguin Swarm, not original Shadow-rEFInd icons; optional/manual-entry graphics only. A Shell or Rescue entry **requires a real executable**; adding an icon alone does not create a menu entry.
 - `source/`: original generated high-resolution assets for later edits. (Not included in compact install ZIP.)
+
+## Shadow-rEFInd icon set (visual-only revision)
+
+This version follows the icon set used by [Penguin Swarm](https://github.com/zany130/rEFInd-bazzite-penguin-swarm): original **[Shadow-rEFInd](https://github.com/chris1111/Shadow-rEFInd)** Windows, fallback OS, utility, and selection PNGs, pinned to upstream commit `fe639d2869f59d291489c0c416c17577bd166046`. Icon sizes are **128px main row / 48px tool row**, with original 144px/64px selection images. The **Bazzite, EFI Shell and Rescue main-row icons are custom carryovers from Penguin Swarm**, because the upstream set does not contain exact equivalents; these are not falsely described as Shadow originals.
+
+**License:** Imported Shadow-rEFInd assets are **AGPL-3.0**, not MIT; full upstream license text is bundled at `third_party/Shadow-rEFInd-AGPL-3.0.txt`. Neither the original wallpaper's rights nor other brands' marks are covered by the icon license. This PR does not edit backgrounds, EFI executables, boot entries, Secure Boot, or the existing build scripts. **The existing asset rebuild script targets the previous custom icons and may overwrite these imported files: do not run it without updating its inputs.**
 
 ## Install — never replace your bootloader
 
@@ -100,6 +106,6 @@ This is an **unofficial community rEFInd theme**, not affiliated with, sponsored
 
 ## Credits and licensing
 
-Design inspired by [Pneaple Boot Theme by pineapplelite](https://github.com/pineapplelite/Pneaple-Boot-Theme) (MIT-licensed) and icon-shadow treatment inspired by [BsxM1 by AlexFullmoon](https://github.com/AlexFullmoon/refind-bsxm1-theme). No upstream theme PNGs or configuration files were copied. The theme composition was generated from the user's approved concept, **which incorporates and adapts Bazzite's official Convergence desktop wallpaper**; see the source-wallpaper section above. Bazzite, Windows and other names/logos remain the property of their respective holders; not an official Bazzite/Universal Blue release. See `LICENSE` and `ATTRIBUTION.md`.
+Design inspired by [Pneaple Boot Theme by pineapplelite](https://github.com/pineapplelite/Pneaple-Boot-Theme) (MIT-licensed) and icon-shadow treatment inspired by [BsxM1 by AlexFullmoon](https://github.com/AlexFullmoon/refind-bsxm1-theme). Original Shadow-rEFInd PNGs are included for Windows, generic Linux/Fedora, utility tools, and selection indicators; its **AGPL-3.0 license** and source attribution are included separately. Custom Bazzite, Shell, and Rescue PNGs are reused from the Penguin Swarm theme. The theme composition was generated from the user's approved concept, **which incorporates and adapts Bazzite's official Convergence desktop wallpaper**; see the source-wallpaper section above. Bazzite, Windows and other names/logos remain the property of their respective holders; not an official Bazzite/Universal Blue release. See `LICENSE` and `ATTRIBUTION.md`.
 
 Official documentation: [rEFInd Theming](https://www.rodsbooks.com/refind/themes.html) and [rEFInd Configuration](https://www.rodsbooks.com/refind/configfile.html).
