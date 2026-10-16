@@ -1,6 +1,6 @@
 # Credits, asset provenance and license scope
 
-This repository is an **unofficial rEFInd theme**, not an official or endorsed release of Bazzite, Universal Blue, Microsoft, rEFInd, or the other projects cited below. Names, artwork and trademarks belong to their respective rights holders.
+This repository is an **unofficial RefindPlus theme adapted from rEFInd**, not an official or endorsed release of Bazzite, Universal Blue, Microsoft, rEFInd, or the other projects cited below. Names, artwork and trademarks belong to their respective rights holders.
 
 ## Shadow-rEFInd graphics (GNU AGPL-3.0)
 
@@ -31,3 +31,12 @@ The rEFInd icon collection is sourced from [chris1111/Shadow-rEFInd](https://git
 Bazzite, Universal Blue, Microsoft, Windows, and other third-party identifiers are the property of their respective owners. The custom Bazzite icon is not an official branding-license grant. This documentation records known sources and license terms; it does not imply consent from rightsholders or resolve any specifically unverified wallpaper permissions.
 
 See the project [README](README.md) for safe installation and QEMU-versus-hardware testing distinctions.
+
+## RefindPlus adaptation
+
+Based on zany130/rEFInd-bazzite-pneaple at `a973082` (history retained).
+The wallpaper, icons and selection graphics are unchanged by this adaptation.
+The new configuration places the real tools row near the bottom using the
+experimental `tool_row_tune` feature in zany130/RefindPlus, commit
+`31cee4c00c2b98ce731e79bb635934884fe20ec9`. New screenshots named
+`refindplus-*.png` are actual QEMU captures with explicitly labeled test entries.

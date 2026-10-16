@@ -1,80 +1,81 @@
-# rEFInd Bazzite Pneaple
+# RefindPlus Bazzite Pneaple
 
-A 4K neon-gaming-room rEFInd theme inspired by Pneaple’s translucent menu bands and built around Bazzite’s Convergence artwork, with a complete Shadow-rEFInd icon collection.
+A separate RefindPlus adaptation of [rEFInd Bazzite Pneaple](https://github.com/zany130/rEFInd-bazzite-pneaple), with the real EFI tools row positioned near the bottom, inspired by the original concept. The existing 4K wallpaper, Shadow icons and glowing-dot selection graphics are unchanged.
 
-> **Status:** The real rEFInd menu has been **previewed in QEMU/OVMF** using the theme assets. A screenshot of that preview is below. The theme has **not been verified on physical UEFI hardware**, and QEMU placeholder boot entries do not establish that any operating system boots successfully.
+**Requires the experimental `tool_row_tune` build:** [zany130/RefindPlus, feature/tool-row-tune](https://github.com/zany130/RefindPlus/tree/feature/tool-row-tune), tested commit `31cee4c00c2b98ce731e79bb635934884fe20ec9`. [Release/debug build artifacts](https://github.com/zany130/RefindPlus/actions/runs/38934290203). Stock rEFInd and RefindPlus builds without that feature cannot move the tools this way. This theme does not include an EFI binary.
 
-![Actual rEFInd menu preview in QEMU; not a physical-firmware screenshot](screenshots/preview.png)
+![Actual RefindPlus VM preview with tools at the bottom](screenshots/refindplus-1080p-tools.png)
 
-## What this repository contains
+The screenshot uses labeled Bazzite/Windows **VM layout placeholders**, not installed operating systems. Firmware, Reboot and Shutdown are actual RefindPlus tools. Their availability depends on firmware support. No artificial Rescue Tools entry is created.
 
-- `background.png`: a 3840×2160 wallpaper with artwork and branding, but **no baked-in working boot-entry icons**.
-- `theme.conf`: visual settings only (background, icons, selection graphics and icon sizes); no boot entries, EFI executables, or Secure Boot configuration.
-- `icons/`: the complete original **Shadow-rEFInd** icon collection, plus a few clearly distinguished aliases and a custom Bazzite image. OS, tools, arrows, volume badges, and optional utilities are included; unused icons do **not** enable new tools.
-- `selection_big.png` / `selection_small.png`: **Pneaple-specific, transparent active-selection graphics** with a small cyan-blue glowing dot. They replace the root Shadow selection tile graphics and display only for the active main-row or utility-row item; upstream originals remain unmodified under `icons/`.
-- `screenshots/preview.png`: a **real rEFInd/QEMU screenshot of the previous styling**, **not yet** an updated QEMU render of this proposed icon, dot, and extended-band revision. `screenshots/concept-preview.png` is a historical illustration, not a real boot-menu screenshot.
-- `source/`: preserved concept/source imagery for future manual artwork changes. This repository does **not** currently ship a reproducible `scripts/build_assets.py` or `scripts/sync_shadow_icons.py` workflow.
-- `third_party/Shadow-rEFInd-AGPL-3.0.txt`, `ATTRIBUTION.md`, and `LICENSE`: rights and provenance notices.
+## What changed
 
-The wallpaper includes design-oriented translucent header, menu and footer bands. The **middle band extends downward to encompass the native rEFInd utility row**, while the decorative bottom/footer band remains unchanged. The wallpaper does not reposition any boot or tool icons.
+- New theme directory: `themes/RefindPlus-bazzite-pneaple/`.
+- `tool_row_tune -10000` deliberately requests more downward travel than needed; the patched boot manager clamps the tools to the lowest safe position while leaving room for the shared label and timeout. This tests the feature's lower-bound behavior across resolutions.
+- OS icons retain their normal centered position. Hints are hidden for the cleaner concept-inspired footer layout.
+- Explicit 1080p sizes with `scale_ui 99` avoid RefindPlus's automatic HiDPI enlargement. The optional 4K profile doubles the icon sizes.
+- A separate example enables the three real tools. The theme itself does not change boot entries, scanning, tools, loaders, timeout, Secure Boot or firmware settings.
 
-## Install on an existing working rEFInd setup
+RefindPlus displays **one selected-item label**, including when an OS entry is selected. That shared label follows the tools to the bottom. Independent captions below every icon, as drawn in the concept, are not supported by this feature. The source wallpaper's extended middle band is retained; this adaptation changes menu positioning rather than repainting the artwork.
 
-**This is a theme, not an rEFInd installer.** Never overwrite `refind.conf` wholesale or replace Shim, GRUB, signed EFI executables, Secure Boot keys, or firmware boot order. The commands below assume that your *existing* EFI System Partition is mounted at `/boot/efi` and rEFInd is installed at `/boot/efi/EFI/refind`. Adjust those locations for your machine.
+## Try it on Bazzite without changing your boot installation
 
-1. Back up the **existing** rEFInd configuration *outside* the ESP:
+Use an existing QEMU/OVMF installation and a downloaded **patched x64 RefindPlus Release binary**. From this repository:
 
-   ```sh
-   sudo cat /boot/efi/EFI/refind/refind.conf > "$HOME/refind.conf.before-rEFInd-bazzite-pneaple.bak"
+```sh
+python3 scripts/preview.py --efi /absolute/path/to/x64_RefindPlus_REL.efi
+```
+
+Close the VM window when finished. It attaches only temporary files, has no network or host disks, and uses a disposable firmware-variable file. Do not launch the placeholder OS entries. The preview does not test your actual Bazzite boot chain.
+
+For a zero-offset comparison and an optional 4K attempt:
+
+```sh
+python3 scripts/preview.py --efi /absolute/path/to/x64_RefindPlus_REL.efi --resolution 3840x2160
+python3 scripts/preview.py --efi /absolute/path/to/x64_RefindPlus_REL.efi --baseline
+```
+
+**4K status:** The profile is prepared but not visually verified: the available OVMF/QEMU setup did not retain a 3840×2160 framebuffer. Verify it on compatible firmware before relying on the 4K layout. Headless capture rejects a mismatched framebuffer instead of treating it as a passed test.
+
+For reproducible headless screenshots, add `--capture /absolute/path/to/captures` (requires Pillow). Captures include both OS selection and tool selection. Use Left/Right/Down/Up in the interactive VM to confirm that the glowing selection marker follows the selected tool. Avoid executing Firmware/Reboot/Shutdown while comparing layouts.
+
+## Use with an existing RefindPlus installation
+
+This is a theme, not a bootloader installer. First test the patched binary through your existing trusted setup. The CI binary is unsigned: it must not replace a trusted bootloader on a Secure Boot system without the appropriate existing signing/trust procedure. Keep Fedora Shim, the working Shim → GRUB chain, firmware keys and boot order intact.
+
+1. Back up your existing RefindPlus `config.conf` outside the ESP.
+2. Copy only `background.png`, `theme.conf`, `selection_big.png`, `selection_small.png`, `icons/` and `profiles/` into a **new** `themes/RefindPlus-bazzite-pneaple/` directory alongside that RefindPlus binary. Do not overwrite the original rEFInd theme.
+3. In your existing main `config.conf`, replace its active theme include with:
+
+   ```text
+   include themes/RefindPlus-bazzite-pneaple/theme.conf
+   showtools firmware,reboot,shutdown
    ```
 
-2. Clone this repository into a normal working directory (not the ESP), then install **only the runtime theme assets**:
+   `showtools` changes the visible tool list; retain any other utilities you want by adding them to that list. Firmware only appears when supported.
 
-   ```sh
-   git clone https://github.com/zany130/rEFInd-bazzite-pneaple.git
-   cd rEFInd-bazzite-pneaple
-   sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-bazzite-pneaple
-   sudo cp -r background.png theme.conf selection_big.png selection_small.png icons /boot/efi/EFI/refind/themes/rEFInd-bazzite-pneaple/
+4. At 3840×2160, add this **after** the theme include in the main config:
+
+   ```text
+   include themes/RefindPlus-bazzite-pneaple/profiles/2160p.conf
    ```
 
-3. In your existing `/boot/efi/EFI/refind/refind.conf`, **replace the currently active theme include**, or add one if none exists. Keep only one active theme include:
+   Do not nest the profile include inside the theme: RefindPlus limits nested configuration includes. Resolution selection remains in your main config, not the theme.
 
-   ```conf
-   include themes/rEFInd-bazzite-pneaple/theme.conf
-   ```
+5. Keep existing boot-entry volume, loader and options unchanged. If desired, update only their icon path to the appropriate file in the new theme directory. Keep Bazzite pointed to its already-working Shim chain.
 
-4. If you use an **existing, already-working manual Bazzite boot entry**, you may change **only** its icon directive:
+To restore normal tools placement, add `tool_row_tune 0` after the theme include in the main config. To undo the theme, restore the prior theme include and tool list from your backup.
 
-   ```conf
-   icon /EFI/refind/themes/rEFInd-bazzite-pneaple/icons/os_bazzite.png
-   ```
+No live ESP, bootloader or Secure Boot changes are performed by the supplied preview script.
 
-   Leave that entry's `volume`, `loader`, options, and all other entries unchanged. On a Bazzite system using Shim for Secure Boot, **retain the already-working Shim → GRUB chain**, rather than pointing rEFInd directly to `grubx64.efi`.
+## Verification and limitations
 
-5. Reboot to check the actual firmware rendering when convenient. To revert, restore your previous `include` and manual-entry icon directives (or the backup); leave your earlier theme directory in place until satisfied.
+See [TESTING.md](TESTING.md) for the exact binary, configurations and observed VM results. Physical firmware, your live Bazzite boot and the actual Secure Boot chain remain untested. The previous host QEMU 10.2.2 test runs occasionally exited with SIGSEGV; a VM process failure is not proof of an EFI layout failure, and persistent failures require separate diagnosis.
 
-## Behavior and limitations
+The historical `screenshots/preview.png` and `screenshots/concept-preview.png` came from the original rEFInd project. Only screenshots prefixed `refindplus-` show this adaptation.
 
-- The display uses stock rEFInd menu positioning: number of discovered OSes, UI alignment, available firmware resolution and font contrast can change its appearance. The existing screenshot depicts an **earlier QEMU preview**, not this proposed refresh or a guarantee of physical-firmware alignment. Please capture a new QEMU screenshot before updating that image.
-- rEFInd generally displays the **selected** boot entry's label; the artistic mockups may depict multiple decorative labels simultaneously.
-- The original Shadow icons are designed around **128px / 48px** display sizes. They may appear relatively small on a native 4K monitor.
-- The theme uses a **filled blue-to-purple Bazzite emblem with a clean white mark** (`icons/os_bazzite.png`), visually matched to the approved purple logo in the wallpaper header. The transparent 128px icon is extracted from that existing wallpaper artwork, replacing the earlier outlined neon icon. The theme does not bundle old optional `os_shell.png` or `os_rescue.png` images; do not assume corresponding menu entries exist.
-- To enable or disable optional utilities, change the **main** `refind.conf` `showtools` setting, not the theme. For example, firmware setup/reboot/shutdown/Shell utilities appear only when supported and enabled. Icons alone do not create a valid EFI loader.
+## Credits and licenses
 
-## Artwork, credits and redistribution
+Source theme history is preserved from commit `a973082` of [zany130/rEFInd-bazzite-pneaple](https://github.com/zany130/rEFInd-bazzite-pneaple). This is a separate repository; it does not change that project.
 
-The published wallpaper is an **edited, composited and resampled derivative** of Bazzite’s official [Convergence wallpaper](https://github.com/ublue-os/bazzite/blob/main/press_kit/art/Convergence_Wallpaper.png), not the original file. The heading now reads **PNEAPLE GAMING THEME**, without the old “Concept” label.
-
-The [Universal Blue artwork repository](https://github.com/ublue-os/artwork) is generally Apache-2.0 but cautions that individual wallpapers can have separate licenses. We have **not** independently verified the Convergence file's specific derivative/redistribution terms. Seek confirmation from the rights holder before treating this modified wallpaper as freely redistributable.
-
-The imported icon collection is from [chris1111/Shadow-rEFInd](https://github.com/chris1111/Shadow-rEFInd), pinned to commit `fe639d2869f59d291489c0c416c17577bd166046`. All imported Shadow icons and the **original** selection assets under `icons/` remain byte-for-byte unchanged. The **root** `selection_big.png` and `selection_small.png` are new theme-specific selection art inspired by, but not copied from, the original selection tiles. Shadow-rEFInd is **AGPL-3.0**, with its full license in `third_party/`; the project MIT license does **not** relicense imported assets, independently owned wallpaper artwork or trademarks.
-
-Layout inspiration: [Pneaple Boot Theme](https://github.com/pineapplelite/Pneaple-Boot-Theme) by pineapplelite (MIT); secondary inspiration: [rEFInd Lumen](https://github.com/shoxjaxon-atabayev/rEFInd-lumen) and [BsxM1](https://github.com/AlexFullmoon/refind-bsxm1-theme). No source code or icon PNGs from those inspiration themes are claimed as part of this theme.
-
-See [ATTRIBUTION.md](ATTRIBUTION.md) for the asset-level provenance and license qualifications. This is an **unofficial community theme**, not affiliated with or endorsed by Bazzite, Universal Blue, Microsoft or the source theme authors.
-
-## Further information
-
-- [Official rEFInd theming guide](https://www.rodsbooks.com/refind/themes.html)
-- [Official rEFInd configuration reference](https://www.rodsbooks.com/refind/configfile.html)
-- [Shadow-rEFInd icon source](https://github.com/chris1111/Shadow-rEFInd)
+Shadow-rEFInd icons retain their AGPL-3.0 license and original attribution. The wallpaper is the source theme's derivative of Bazzite Convergence artwork; its file-specific derivative/redistribution terms remain unverified as recorded by that project. The MIT project license does not relicense third-party artwork, graphics or trademarks. See [ATTRIBUTION.md](ATTRIBUTION.md), [LICENSE](LICENSE), and [third_party/Shadow-rEFInd-AGPL-3.0.txt](third_party/Shadow-rEFInd-AGPL-3.0.txt).
