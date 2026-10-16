@@ -1,0 +1,90 @@
+name: One-off Pneaple artwork refinement
+on:
+  push:
+    branches: [visual/pneaple-concept-polish]
+permissions:
+  contents: write
+jobs:
+  render:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pillow numpy
+      - name: Refine selected-state graphics and background bar
+        shell: bash
+        run: |
+          python - <<'PY'
+          from PIL import Image, ImageDraw, ImageFilter
+          import numpy as np
+          from pathlib import Path
+
+          # Restore original approved luminous standalone Bazzite glyph, with transparent padding.
+          raw = Image.open("source/original-glowing_cyan_to_magenta_monogram_icon.png").convert("RGBA")
+          glyph = raw.resize((116, 116), Image.Resampling.LANCZOS)
+          icon = Image.new("RGBA", (128, 128), (0, 0, 0, 0))
+          icon.alpha_composite(glyph, (6, 1))
+          icon.save("icons/os_bazzite.png", optimize=True)
+
+          def blue_dot(size, radius, cy, blur):
+              scale = 4
+              n=size*scale
+              layer=Image.new("RGBA",(n,n))
+              d=ImageDraw.Draw(layer)
+              cx=size/2*scale; yy=cy*scale
+              # Painted dots belong to the selected graphic: they follow rEFInd's selection.
+              for width,alpha in [(radius*3,40),(radius*2,70),(radius*1.5,100)]:
+                  d.ellipse((cx-width*scale,yy-width*scale,cx+width*scale,yy+width*scale),fill=(48,121,255,alpha))
+              glow = layer.filter(ImageFilter.GaussianBlur(blur*scale))
+              final=Image.new("RGBA",(n,n))
+              final.alpha_composite(glow)
+              d=ImageDraw.Draw(final)
+              R=radius*scale
+              d.ellipse((cx-R,yy-R,cx+R,yy+R),fill=(76,188,255,255))
+              inner=R*0.47
+              d.ellipse((cx-inner,yy-inner,cx+inner,yy+inner),fill=(190,240,255,255))
+              return final.resize((size,size),Image.Resampling.LANCZOS)
+
+          # No opaque white Shadow selection tiles. This creates a clean, selected-only dot.
+          blue_dot(144, 3.8, 136, 7).save("selection_big.png", optimize=True)
+          # Utilities have their own active dot, scaled for the 64-pixel selection tile.
+          blue_dot(64, 2.5, 59, 4).save("selection_small.png", optimize=True)
+
+          # Extend only the BOTTOM of the existing middle black band; leave header, scene
+          # and footer band unchanged. Infer the exact existing bar edge from image brightness.
+          p=Path("background.png")
+          im=Image.open(p).convert("RGB")
+          a=np.array(im)
+          h,w=a.shape[:2]
+          assert (w,h)==(3840,2160), f"Unexpected background size: {(w,h)}"
+          ys=range(1150,1550)
+          # median brightness over the full wallpaper width at sparse columns; pick strongest
+          # upward luminance transition around the existing band's lower edge.
+          bands=np.median(a[1100:1600,::24,:].astype("float32").mean(axis=2),axis=1)
+          diff=np.array([float(bands[y-1100+4]-bands[y-1100-4]) for y in ys])
+          first=int(ys[int(np.argmax(diff))])
+          print("Detected original band edge:",first,"brightness jump:",round(float(diff.max()),2))
+          assert 1250 <= first <= 1460, f"Unexpected band edge {first}"
+          last=min(h-1,first+190)
+          # Retain the existing scene colors, gently tinting ONLY the newly extended strip.
+          op=0.70
+          for y in range(first,last):
+              strength=op
+              if y >= last-12: strength *= max(0,(last-y)/12)
+              a[y,:,:]=np.clip(a[y,:,:].astype("float32")*(1-strength),0,255).astype("uint8")
+          Image.fromarray(a).save(p,optimize=True)
+          print("Band extended:", first, "->",last, "by",last-first,"pixels")
+          print("Modified paths: background.png, icons/os_bazzite.png, selection_big.png, selection_small.png")
+          PY
+      - name: Commit just the 4 final artwork PNGs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add background.png icons/os_bazzite.png selection_big.png selection_small.png
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refine Pneaple selected state and extend center panel for utilities"
+          git push origin HEAD:visual/pneaple-concept-polish
