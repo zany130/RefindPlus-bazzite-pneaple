@@ -34,7 +34,7 @@ The wallpaper includes design-oriented translucent header, menu and footer bands
    git clone https://github.com/zany130/rEFInd-bazzite-pneaple.git
    cd rEFInd-bazzite-pneaple
    sudo mkdir -p /boot/efi/EFI/refind/themes/rEFInd-bazzite-pneaple
-   sudo cp -a background.png theme.conf selection_big.png selection_small.png icons /boot/efi/EFI/refind/themes/rEFInd-bazzite-pneaple/
+   sudo cp -r background.png theme.conf selection_big.png selection_small.png icons /boot/efi/EFI/refind/themes/rEFInd-bazzite-pneaple/
    ```
 
 3. In your existing `/boot/efi/EFI/refind/refind.conf`, **replace the currently active theme include**, or add one if none exists. Keep only one active theme include:
