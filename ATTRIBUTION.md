@@ -40,3 +40,7 @@ The new configuration places the real tools row near the bottom using the
 experimental `tool_row_tune` feature in zany130/RefindPlus, commit
 `31cee4c00c2b98ce731e79bb635934884fe20ec9`. New screenshots named
 `refindplus-*.png` are actual QEMU captures with explicitly labeled test entries.
+
+## RefindPlus exit splash
+
+`icons/boot_outlogo.png` is an exact copy of this theme's custom `icons/os_bazzite.png`, reusing the previously approved wallpaper-derived emblem described above. It is not a new official Bazzite brand asset or a Shadow-rEFInd import. Its provenance and rights limitations are the same as the existing custom emblem.

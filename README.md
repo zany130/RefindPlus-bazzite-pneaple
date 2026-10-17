@@ -18,6 +18,22 @@ The screenshot uses labeled Bazzite/Windows **VM layout placeholders**, not inst
 
 RefindPlus displays **one selected-item label**, including when an OS entry is selected. That shared label follows the tools to the bottom. Independent captions below every icon, as drawn in the concept, are not supported by this feature. The narrower middle band and bottom band are restored byte-for-byte from the earlier artwork; the tools now sit over the restored bottom band.
 
+## Native RefindPlus exit splash
+
+![Native RefindPlus exit splash in QEMU](screenshots/refindplus-exit-splash.png)
+
+`icons/boot_outlogo.png` reuses the theme's transparent blue-purple Bazzite emblem byte-for-byte. RefindPlus loads this from the configured `icons_dir` and centers it before supported graphical OS launches. It takes precedence over the per-OS boot logos, so eligible Windows launches also show the theme emblem.
+
+The theme enables exit images with `disable_exitlogo_image OFF` and keeps them visible until the next loader redraws the screen with `disable_exitlogo_clear`. Native scaling remains enabled. The existing menu icon, wallpaper and selection graphics are unchanged.
+
+**Loader limitation:** RefindPlus's exit-logo path applies to graphical Linux-stub (`L`) and Windows (`W`) entries, not every EFI application. Text/verbose launches, GRUB and an unclassified Shim entry may bypass it. This is a boot-manager splash, not a replacement for Plymouth, Windows startup graphics or a firmware BGRT. The theme does not change loader paths, force a Shim entry to another OS type, or change your trusted boot chain.
+
+For a supported manual entry, `graphics on` enables graphical handoff; add it to that entry in your main configuration if desired. Keep its existing loader, volume and OS classification intact. Do not replace a working Shim loader just to obtain a splash. A following loader can clear the image immediately after handoff.
+
+Verified at 1920×1080 in QEMU/OVMF using patched RefindPlus `bf0be4c`: a temporary manual entry marked `ostype Windows` with `graphics on` launched a copy of the boot manager solely to exercise the native exit path. The screenshot was captured during that handoff. No real OS or host disk was attached; this verifies rendering, not a Windows boot or the live Bazzite/Shim handoff. The PNG was decoded successfully and checked byte-for-byte against the existing emblem.
+
+To disable the splash, add `disable_exitlogo_image ALL` **after** the theme include in your main configuration.
+
 ## Try it on Bazzite without changing your boot installation
 
 Use an existing QEMU/OVMF installation and a downloaded **patched x64 RefindPlus Release binary**. From this repository:
